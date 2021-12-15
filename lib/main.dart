@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
     home: App(),
+    debugShowCheckedModeBanner: false,
   ));
 }
 
@@ -11,9 +12,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text("Hello Madhu"),
+    return Scaffold(
+      backgroundColor: Colors.blueAccent,
+      body: Center(
+        child: Image.asset(
+          'images/logo.png',
+        ) ,
       ),
     );
   }
