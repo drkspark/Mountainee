@@ -13,12 +13,17 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
-      body: Center(
-        child: Image.asset(
-          'images/logo.png',
-        ) ,
-      ),
-    );
+        backgroundColor: Colors.blueAccent[400],
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("images/logo.png"),
+            Text("First App",
+                style: TextStyle(
+                    fontSize: 32,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.indigo[800]))
+          ],
+        ));
   }
 }
