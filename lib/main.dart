@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -12,24 +13,37 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        //! Devices Height and Width
-        height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        /*
-        child: ListView(
+        height: MediaQuery.of(context).size.height,
+
+        color: Colors.redAccent,
+
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+
           children: [
-            for(int i=0;i<100;i++)
-              Text("Hello")
+            Image.asset("images/logo.png"),
+            Text(
+              "Mountainer's",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: GoogleFonts.balooBhaijaan().fontFamily,
+                fontSize: 45,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "This is my first time Doing this",
+              style: TextStyle(
+                fontSize: 15
+              ),
+            )
           ],
         ),
-        */
-        child: ListView.builder(
-          itemBuilder: (context, i) {
-            return Text("Madhu Sudhan");
-          },
-          itemCount: 100,
-        ),
-      ),
+      )
     );
   }
 }
