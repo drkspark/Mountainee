@@ -33,7 +33,8 @@ class App extends StatelessWidget {
             Container(
                 color: Colors.red,
               child: Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Row(
                     children: [Text("Row1"),Text("Row2")],
