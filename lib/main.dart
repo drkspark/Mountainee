@@ -15,47 +15,19 @@ class App extends StatelessWidget {
         //! Devices Height and Width
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-
-        child: Column(
-          //! This aligns the children to the center of the row
-          crossAxisAlignment: CrossAxisAlignment.center,
-
-          //! This aligns the children to the center of the column
-          mainAxisAlignment: MainAxisAlignment.center,
-          
-          
+        /*
+        child: ListView(
           children: [
-            Text("Madhu Sudhan"),
-            SizedBox(
-              width: 30,
-              height: 50,
-            ),
-            Container(
-                color: Colors.red,
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [Text("Row1"),Text("Row2")],
-                  ),
-                  Row(
-                    children: [Text("Row2"),Text("Row2.2")],
-                  ),
-                  Text("This is the 3rd Widget")
-                ],
-              ),
-            ),
-            SizedBox(
-              width: 30,
-              height: 50,
-            ),
-            Text("Soumya"),
-            Text("Janani"),
-            Text("Vitesh"),
-            Text("Abhinay")
-
+            for(int i=0;i<100;i++)
+              Text("Hello")
           ],
+        ),
+        */
+        child: ListView.builder(
+          itemBuilder: (context, i) {
+            return Text("Madhu Sudhan");
+          },
+          itemCount: 100,
         ),
       ),
     );
