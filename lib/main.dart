@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
     home: App(),
+    theme: ThemeData(primaryColor: Colors.black),
     debugShowCheckedModeBanner: false,
   ));
 }
