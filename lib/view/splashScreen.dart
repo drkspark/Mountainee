@@ -1,3 +1,4 @@
+import 'package:classes/view/loginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -36,9 +37,29 @@ class _SplashScreenState extends State<SplashScreen> {
             "Heaven for Mountain Climber's",
             style: TextStyle(fontSize: 15),
           ),
-          Text("Version 1.0")
+          Text("Version 1.0"),
+          //! Button
+          ElevatedButton(
+              onPressed: () {
+                  //! it helps to navigate => Navigator
+                  //! it will connected to the root of the project -root->splashscreen->loginscreen
+                  //! push => to push youself on the next page ,
+                  //! pop=> it will help you to get back to the earlier page
+                  //! materialpageroute will provide me the animation of stock android page chnaging
+                  //! context for widget tree
+                  //! loginpage , its a page where i want to route my self
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => LoginPage() //? We have created this LoginPage in  loginScreen.dart file, which is being called from here
+                  )
+                );
+              },
+              child: Text("Click ME"))
         ],
       ),
     ));
   }
+}
+
+void onclick() {
+  print("Hello Button");
 }
