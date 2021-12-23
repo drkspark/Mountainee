@@ -1,3 +1,4 @@
+import 'package:classes/view/registerPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,6 +13,11 @@ class _LoginPageState extends State<LoginPage> {
   final _mobCntrl = TextEditingController();
   final _passCntrl = TextEditingController();
 
+  //! Key
+  final _formKey = GlobalKey<
+      FormState>(); //?  Creates a [LabeledGlobalKey], which is a [GlobalKey] with a label used for debugging.
+  //? The label is purely for debugging and not used for comparing the identity of the key.
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
 //! LOGO
             Image.asset("images/logo.png"),
+
 //! Name of  App
             Text(
               "Mountainer's",
@@ -33,42 +40,70 @@ class _LoginPageState extends State<LoginPage> {
                   fontSize: 45,
                   fontWeight: FontWeight.bold),
             ),
-//! Mobile No
-            TextFormField(
-              controller: _mobCntrl,
-              maxLength: 10, //? Maximum number of charaters that can be entered
-              cursorColor: Colors.black,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                  prefixText: "+91 - ",//Adding the prefix text showing our countries Code
-                  label: Text(
-                    // "Username",
-                    "Mobile No",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.black),
-                  )),
-            ),
-//! Password
 
-            TextFormField(
-              controller: _passCntrl,
-              obscureText: true, //? Hides whatever we are writing
-              cursorColor: Colors.black,
-              decoration: InputDecoration(
-                  label: Text(
-                "Password",
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-              )),
+//! Form : For Validation
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+//! Mobile No
+                  TextFormField(
+                    controller: _mobCntrl,
+                    maxLength: //? It automatically  adds a small character count beneth the FormField
+                        10, //? Maximum number of charaters that can be entered
+                    validator: (value) {
+                      if (value == null)
+                        return "Field Left Empty";
+                      else
+                        return null;
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    cursorColor: Colors.black,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        prefixText:
+                            "+91 - ", //Adding the prefix text showing our countries Code
+                        label: Text(
+                          // "Username",
+                          "Mobile No",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
+                        )),
+                  ),
+                  //! Password
+
+                  TextFormField(
+                    controller: _passCntrl,
+                    obscureText: true, //? Hides whatever we are writing
+                    validator: (value) {
+                      if (value == null)
+                        return "Field Left Empty";
+                      else
+                        return null;
+                    },
+                    cursorColor: Colors.black,
+                    decoration: InputDecoration(
+                        label: Text(
+                      "Password",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.black),
+                    )),
+                  ),
+                ],
+              ),
             ),
+
             SizedBox(height: 20),
+
 //! Login Button
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: ElevatedButton(onPressed: () {
-                  print(_mobCntrl.text);
-                  print(_passCntrl.text);
-              }, child: Text("Login")),
+              child: ElevatedButton(
+                  onPressed: () {
+                    print(_mobCntrl.text);
+                    print(_passCntrl.text);
+                  },
+                  child: Text("Login")),
             ),
 
 //! Recover PassWord
@@ -83,7 +118,12 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: ElevatedButton(
-                  onPressed: () {},child: Text("Register")),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Register())
+                    );
+                  },
+                  child: Text("Register")),
             )
           ],
         ),
