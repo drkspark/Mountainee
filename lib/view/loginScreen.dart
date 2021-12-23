@@ -12,6 +12,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _mobCntrl = TextEditingController();
   final _passCntrl = TextEditingController();
+  bool _visibility = true;
 
   //! Key
   final _formKey = GlobalKey<
@@ -74,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   TextFormField(
                     controller: _passCntrl,
-                    obscureText: true, //? Hides whatever we are writing
+                    obscureText: _visibility, //? Hides whatever we are writing
                     validator: (value) {
                       if (value == null)
                         return "Field Left Empty";
@@ -83,11 +84,23 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
-                        label: Text(
-                      "Password",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.black),
-                    )),
+                      label: Text(
+                        "Password",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _visibility = !_visibility;
+                            });
+                          },
+                          icon: Icon(_visibility 
+                                     ? Icons.visibility
+                                     : Icons.visibility_off
+                          )
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -100,8 +113,16 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: ElevatedButton(
                   onPressed: () {
-                    print(_mobCntrl.text);
-                    print(_passCntrl.text);
+                    // print(_mobCntrl.text);
+                    // print(_passCntrl.text);
+
+                    if (_mobCntrl.text == "9963696101") {
+                      if (_passCntrl.text == "admin")
+                        print("Correct Credentials");
+                      else
+                        print("Incorrect Creddentials");
+                    } else
+                      print("Incorrect Creddentials");
                   },
                   child: Text("Login")),
             ),
@@ -120,8 +141,7 @@ class _LoginPageState extends State<LoginPage> {
               child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Register())
-                    );
+                        MaterialPageRoute(builder: (context) => Register()));
                   },
                   child: Text("Register")),
             )
