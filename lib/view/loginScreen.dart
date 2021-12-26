@@ -116,33 +116,9 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      if (_mobCntrl.text == "9963696101" &&
-                          _passCntrl.text == "admin") {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => HomeScreen()));
-                      } else {
-                        //! Prompt to show creds are Wrong
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: Text("Alert!!"),
-                                  content: Text(
-                                      "You have provided with wrong credential!! , Please Correct them"),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("OK"))
-                                  ],
-                                )
-                        );
-                      }
-                    }
-                  },
-                  child: Text("Login")),
+                  onPressed: () => _loginValidate(),
+                  child: Text("Login")
+              ),
             ),
 
 //! Recover PassWord
@@ -167,5 +143,32 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+  _loginValidate(){
+    if (_formKey.currentState!.validate()) {
+      if (_mobCntrl.text == "9963696101" &&
+          _passCntrl.text == "admin") {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => HomeScreen()));
+      } else {
+        //! Prompt to show creds are Wrong
+        showDialog(
+            barrierDismissible: false, // This will make sure that the dialog box closes only when OK button is tapped
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text("Alert!!"),
+                  content: Text(
+                      "You have provided with wrong credential!! , Please Correct them"),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("OK"))
+                  ],
+            )
+        );
+      }
+    }
   }
 }
