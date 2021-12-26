@@ -1,3 +1,4 @@
+import 'package:classes/view/homeScreen.dart';
 import 'package:classes/view/registerPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,7 +16,8 @@ class _LoginPageState extends State<LoginPage> {
   bool _visibility = true;
 
   //! Key
-  final _formKey = GlobalKey<FormState>(); //?  Creates a [LabeledGlobalKey], which is a [GlobalKey] with a label used for debugging.
+  final _formKey = GlobalKey<
+      FormState>(); //?  Creates a [LabeledGlobalKey], which is a [GlobalKey] with a label used for debugging.
   //? The label is purely for debugging and not used for comparing the identity of the key.
 
   @override
@@ -52,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                     maxLength: //? It automatically  adds a small character count beneth the FormField
                         10, //? Maximum number of charaters that can be entered
                     validator: (value) {
-                      if (value=="" || value == null)
+                      if (value == "" || value == null)
                         return "Field Left Empty";
                       else
                         return null;
@@ -69,8 +71,9 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.black),
                         ),
-                        errorStyle: TextStyle(fontWeight: FontWeight.bold,color: Colors.red[900])
-                    ),
+                        errorStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red[900])),
                   ),
                   //! Password
 
@@ -78,30 +81,30 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _passCntrl,
                     obscureText: _visibility, //? Hides whatever we are writing
                     validator: (value) {
-                      if (value=="" || value == null)
+                      if (value == "" || value == null)
                         return "Field Left Empty";
                       else
                         return null;
                     },
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
-                      label: Text(
-                        "Password",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                      suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _visibility = !_visibility;
-                            });
-                          },
-                          icon: Icon(_visibility
-                              ? Icons.visibility
-                              : Icons.visibility_off)
-                      ),
-                      errorStyle: TextStyle(fontWeight: FontWeight.bold,color: Colors.red[900])
-                    ),
+                        label: Text(
+                          "Password",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _visibility = !_visibility;
+                              });
+                            },
+                            icon: Icon(_visibility
+                                ? Icons.visibility
+                                : Icons.visibility_off)),
+                        errorStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red[900])),
                   ),
                 ],
               ),
@@ -115,13 +118,31 @@ class _LoginPageState extends State<LoginPage> {
               child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      print("We are good to go to login screen");
-                    } else {
-                      print("Error");
+                      if (_mobCntrl.text == "9963696101" &&
+                          _passCntrl.text == "admin") {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => HomeScreen()));
+                      } else {
+                        //! Prompt to show creds are Wrong
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: Text("Alert!!"),
+                                  content: Text(
+                                      "You have provided with wrong credential!! , Please Correct them"),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("OK"))
+                                  ],
+                                )
+                        );
+                      }
                     }
                   },
-                  child: Text("Login")
-              ),
+                  child: Text("Login")),
             ),
 
 //! Recover PassWord
@@ -130,8 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text(
                   "Recover Password",
                   style: TextStyle(color: Colors.white),
-                )
-            ),
+                )),
 
 //! Register Button
             Padding(
