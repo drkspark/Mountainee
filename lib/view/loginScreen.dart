@@ -15,8 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _visibility = true;
 
   //! Key
-  final _formKey = GlobalKey<
-      FormState>(); //?  Creates a [LabeledGlobalKey], which is a [GlobalKey] with a label used for debugging.
+  final _formKey = GlobalKey<FormState>(); //?  Creates a [LabeledGlobalKey], which is a [GlobalKey] with a label used for debugging.
   //? The label is purely for debugging and not used for comparing the identity of the key.
 
   @override
@@ -53,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                     maxLength: //? It automatically  adds a small character count beneth the FormField
                         10, //? Maximum number of charaters that can be entered
                     validator: (value) {
-                      if (value == null)
+                      if (value=="" || value == null)
                         return "Field Left Empty";
                       else
                         return null;
@@ -69,7 +68,9 @@ class _LoginPageState extends State<LoginPage> {
                           "Mobile No",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.black),
-                        )),
+                        ),
+                        errorStyle: TextStyle(fontWeight: FontWeight.bold,color: Colors.red[900])
+                    ),
                   ),
                   //! Password
 
@@ -77,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _passCntrl,
                     obscureText: _visibility, //? Hides whatever we are writing
                     validator: (value) {
-                      if (value == null)
+                      if (value=="" || value == null)
                         return "Field Left Empty";
                       else
                         return null;
@@ -95,11 +96,11 @@ class _LoginPageState extends State<LoginPage> {
                               _visibility = !_visibility;
                             });
                           },
-                          icon: Icon(_visibility 
-                                     ? Icons.visibility
-                                     : Icons.visibility_off
-                          )
+                          icon: Icon(_visibility
+                              ? Icons.visibility
+                              : Icons.visibility_off)
                       ),
+                      errorStyle: TextStyle(fontWeight: FontWeight.bold,color: Colors.red[900])
                     ),
                   ),
                 ],
@@ -113,18 +114,14 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: ElevatedButton(
                   onPressed: () {
-                    // print(_mobCntrl.text);
-                    // print(_passCntrl.text);
-
-                    if (_mobCntrl.text == "9963696101") {
-                      if (_passCntrl.text == "admin")
-                        print("Correct Credentials");
-                      else
-                        print("Incorrect Creddentials");
-                    } else
-                      print("Incorrect Creddentials");
+                    if (_formKey.currentState!.validate()) {
+                      print("We are good to go to login screen");
+                    } else {
+                      print("Error");
+                    }
                   },
-                  child: Text("Login")),
+                  child: Text("Login")
+              ),
             ),
 
 //! Recover PassWord
@@ -133,7 +130,8 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text(
                   "Recover Password",
                   style: TextStyle(color: Colors.white),
-                )),
+                )
+            ),
 
 //! Register Button
             Padding(
