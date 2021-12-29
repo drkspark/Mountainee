@@ -1,3 +1,6 @@
+import 'package:classes/dummy/data.dart';
+import 'package:classes/models/blog_data_model.dart';
+import 'package:classes/models/blog_list.dart';
 import 'package:classes/view/settingPage.dart';
 import 'package:flutter/material.dart';
 
@@ -8,34 +11,47 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  BlogListModel _blogListModel = BlogListModel();
+
   @override
-  // The return type here is Widget which is dynamic i.e. we can return any type of the widget
+  void initState() {
+    _blogListModel = BlogListModel.fromJson(data); //Present in the data.dart
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
-    print("Rebuilding the whole Scaffold");
+
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text("Home Page"),
+        actions: [
+          IconButton(onPressed: (){}, icon: Icon(Icons.messenger_sharp))
+        ],
+        
       ),
       body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: ListView(
-            children: [
-              // We are using seperate widgets for now as we don't have to deal with state for now
-              for (int i = 1; i <= 5; i++) _tile(),
-            ],
-          )),
+        color: Colors.white38,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: ListView.builder(
+            itemCount: _blogListModel.totalCount,
+            itemBuilder: (context, i) {
+              return _tile(_blogListModel.blogList![i]);
+            }),
+      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          GestureDetector(
+            onTap: () => AlertDialog(
+            ),
+          );
+        },
         child: Icon(
           Icons.add,
         ),
       ),
       drawer: _drawer(),
-      //? By default it will take the place in the appBar replacing the back  button on the left side
-
-      //use endDrawer for a drawer at the right side of the appBar
-      // endDrawer: Drawer(),
     );
   }
 
@@ -83,20 +99,82 @@ class _HomeScreenState extends State<HomeScreen> {
 
   //! Private function which return the widget(Conntainer) we need
   //! These are called as seperate widget
-  Widget _tile() {
+  Widget _tile(BlogList data) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+
+      padding: const EdgeInsets.all(7),
       child: Container(
-        height: 200,
+        height: 225,
+       
         child: Column(
           children: [
+
+//! Image
+
             Container(
               height: 150,
-              color: Colors.green,
+              alignment: Alignment.topCenter,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(data.image!,)
+                )
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                  children: [
+                    Row(
+                      children: [
+                        CircleAvatar(child: Icon(Icons.mood),radius: 15,),
+                        SizedBox(width: 5,),
+                        Text(
+                          data.bloggerName!,
+                          style: 
+                          TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    Icon(data.liked! ?
+                      Icons.favorite
+                      : Icons.favorite_border,
+                      color: Colors.pink,
+                      
+                    )
+                  ],
+                ),
+              ),
             ),
+
+//! Data about the Image
+
             Container(
-              height: 50,
-              color: Colors.blue,
+              height: 70,
+              color: Colors.blueAccent,
+              padding: EdgeInsets.all(2),
+              child: Column(
+              children:[
+                  Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.nordic_walking),
+                        Text(data.mountain!),
+                      ],
+                    ),
+                    Text(data.postTime!),
+                  ],
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Text(data.shortDescription!,overflow: TextOverflow.ellipsis,),
+                Text(data.wordsByBlogger!,overflow: TextOverflow.ellipsis,)
+              ]
+              )
             )
           ],
         ),
@@ -104,40 +182,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-/*
-//! Class which return the widget(in this case Container) we need
-//! This is a Helper Widget class
-//! Each and every containor has it's state
-class Tile extends StatefulWidget {
-  final double height;
-  final double width;
-  final Color col;
-
-  //? Constructor of this class
-  Tile(this.height, this.width, this.col);
-
-  @override
-  State<Tile> createState() => _TileState();
-}
-
-class _TileState extends State<Tile> {
-  @override
-  Widget build(BuildContext context) {
-    print("Rebuilding the Container #Helper Widget");
-    return Container(
-      height: widget.height,
-      width: widget.width,
-      color: widget.col,
-      child: IconButton(
-        onPressed: (){
-          setState(() {
-            
-          });
-        },
-        icon: Icon(Icons.ac_unit),
-      ),
-    );
-  }
-}
-*/
