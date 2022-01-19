@@ -1,49 +1,59 @@
-
 class BlogList {
-    String? blogId;
-    String? bloggerName;
-    String? bloggerId;
-    String? likes;
-    bool? liked;
-    String? latitude;
-    String? longitude;
-    String? mountain;
-    String? shortDescription;
-    String? wordsByBlogger;
-    String? postTime;
-    String? image;
+  String? blogId;
+  String? bloggerName;
+  String? bloggerId;
+  String? likes;
+  String? liked;
+  String? latitude;
+  String? longitude;
+  String? mountain;
+  String? shortDescription;
+  String? wordsByBlogger;
+  String? postTime;
+  String? image;
 
-    BlogList({this.blogId, this.bloggerName, this.bloggerId, this.likes, this.liked, this.latitude, this.longitude, this.mountain, this.shortDescription, this.wordsByBlogger, this.postTime, this.image});
+  BlogList({
+    this.blogId,
+    this.bloggerName,
+    this.bloggerId,
+    this.likes,
+    this.liked,
+    this.latitude,
+    this.longitude,
+    this.mountain,
+    this.shortDescription,
+    this.wordsByBlogger,
+    this.postTime,
+    this.image,
+  });
 
-    BlogList.fromJson(Map<String, dynamic> json) {
-        blogId = json["BlogID"];
-        bloggerName = json["BloggerName"];
-        bloggerId = json["BloggerID"];
-        likes = json["Likes"];
-        liked = json["Liked"];
-        latitude = json["Latitude"];
-        longitude = json["Longitude"];
-        mountain = json["Mountain"];
-        shortDescription = json["ShortDescription"];
-        wordsByBlogger = json["WordsByBlogger"];
-        postTime = json["PostTime"];
-        image = json["image"];
-    }
+  factory BlogList.fromJson(Map<String, dynamic> json) => BlogList(
+        blogId: json['BlogID'] as String?,
+        bloggerName: json['BloggerName'] as String?,
+        bloggerId: json['BloggerID'] as String?,
+        likes: json['Likes'] as String?,
+        liked: json['Liked'].toString(),
+        latitude: json['Latitude'] as String?,
+        longitude: json['Longitude'] as String?,
+        mountain: json['Mountain'] as String?,
+        shortDescription: json['ShortDescription'] as String?,
+        wordsByBlogger: json['WordsByBlogger'] as String?,
+        postTime: json['PostTime'] as String?,
+        image: json['image'] as String?,
+      );
 
-    Map<String, dynamic> toJson() {
-        final Map<String, dynamic> data =  <String, dynamic>{};
-        data["BlogID"] = blogId;
-        data["BloggerName"] = bloggerName;
-        data["BloggerID"] = bloggerId;
-        data["Likes"] = likes;
-        data["Liked"] = liked;
-        data["Latitude"] = latitude;
-        data["Longitude"] = longitude;
-        data["Mountain"] = mountain;
-        data["ShortDescription"] = shortDescription;
-        data["WordsByBlogger"] = wordsByBlogger;
-        data["PostTime"] = postTime;
-        data["image"] = image;
-        return data;
-    }
+  Map<String, dynamic> toJson() => {
+        'BlogID': blogId,
+        'BloggerName': bloggerName,
+        'BloggerID': bloggerId,
+        'Likes': likes,
+        'Liked': liked,
+        'Latitude': latitude,
+        'Longitude': longitude,
+        'Mountain': mountain,
+        'ShortDescription': shortDescription,
+        'WordsByBlogger': wordsByBlogger,
+        'PostTime': postTime,
+        'image': image,
+      };
 }

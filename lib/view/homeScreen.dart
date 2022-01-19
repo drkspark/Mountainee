@@ -1,5 +1,5 @@
 import 'package:classes/dummy/data.dart';
-import 'package:classes/models/blog_data_model.dart';
+import 'package:classes/models/blog_list_model.dart';
 import 'package:classes/models/blog_list.dart';
 import 'package:classes/view/blogDetailScreen.dart';
 import 'package:classes/view/settingPage.dart';
@@ -42,7 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: _blogListModel.totalCount,
               itemBuilder: (context, i) {
                 return _tile(_blogListModel.blogList![i]);
-              }),
+              }
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -142,7 +143,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     Icon(
-                      data.liked! ? Icons.favorite : Icons.favorite_border,
+                      data.liked! == "true" 
+                      ? Icons.favorite 
+                      : Icons.favorite_border,
                       color: Colors.pink,
                     )
                   ],
@@ -180,7 +183,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     data.wordsByBlogger!,
                     overflow: TextOverflow.ellipsis,
                   )
-                ]))
+                ]
+                )
+            )
           ],
         ),
       ),
