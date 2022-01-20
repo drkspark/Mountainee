@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:classes/blogsApi.dart';
+import 'package:classes/api.dart';
 import 'package:http/http.dart' as apiHit;
 
 //! Function To check if the API is working correctly

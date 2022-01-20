@@ -1,12 +1,11 @@
-import 'package:classes/blogsApi.dart';
-import 'package:classes/dummy/data.dart';
+import 'package:classes/api.dart';
 import 'package:classes/models/blog_list_model.dart';
 import 'package:classes/models/blog_list.dart';
 import 'package:classes/networkHelper.dart';
-import 'package:classes/view/blogDetailScreen.dart';
+import 'package:classes/view/addBlog.dart';
+// import 'package:classes/view/blogDetailScreen.dart';
 import 'package:classes/view/settingPage.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as apiHit;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var response = await hitApi(blogsApi); // It will be JSON
 
     // Just Checking if we are getting the response
-    print(response);
+    // print(response);
 
     BlogListModel blogListModel = BlogListModel.fromJson(response);
 
@@ -56,13 +55,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CircularProgressIndicator(),
                 );
               } else if (snap.hasData) {
-                if (snap.data!.status == 'true') { //? If the intended data is recieved
+                if (snap.data!.status == 'true') {
+                  //? If the intended data is recieved
                   return ListView.builder(
                       itemCount: snap.data!.totalCount,
                       itemBuilder: (context, i) {
                         return _tile(snap.data!.blogList![i]);
                       });
-                } else { //? If the requied data was not returned i.e. status == 'false'
+                } else {
+                  //? If the requied data was not returned i.e. status == 'false'
                   return Center(
                     child: Text("${snap.data!.message}"),
                   );
@@ -75,7 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
             }),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => AddBlog()));
+        },
         child: Icon(
           Icons.add,
         ),
