@@ -1,9 +1,12 @@
+import 'package:classes/blogsApi.dart';
 import 'package:classes/dummy/data.dart';
 import 'package:classes/models/blog_list_model.dart';
 import 'package:classes/models/blog_list.dart';
+import 'package:classes/networkHelper.dart';
 import 'package:classes/view/blogDetailScreen.dart';
 import 'package:classes/view/settingPage.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as apiHit;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,12 +15,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  BlogListModel _blogListModel = BlogListModel();
+  // BlogListModel _blogListModel = BlogListModel();
+  // @override
+  // void initState() {
+  //   _blogListModel = BlogListModel.fromJson(data); //Present in the data.dart
+  //   super.initState();
+  // }
 
-  @override
-  void initState() {
-    _blogListModel = BlogListModel.fromJson(data); //Present in the data.dart
-    super.initState();
+  // Get Blog Data
+  Future<BlogListModel> getBlogList() async {
+    var response = await hitApi(blogsApi); // It will be JSON
+
+    // Just Checking if we are getting the response
+    print(response);
+
+    BlogListModel blogListModel = BlogListModel.fromJson(response);
+
+    return blogListModel; // This will be in Mapping Form
   }
 
   Widget build(BuildContext context) {
@@ -29,29 +43,39 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(onPressed: () {}, icon: Icon(Icons.messenger_sharp))
         ],
       ),
-      body: GestureDetector(
-        onTap: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => BlogDetail()));
-        },
-        child: Container(
-          color: Colors.white38,
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-              itemCount: _blogListModel.totalCount,
-              itemBuilder: (context, i) {
-                return _tile(_blogListModel.blogList![i]);
+      body: Container(
+        color: Colors.white38,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: FutureBuilder<BlogListModel>(
+            future: getBlogList(),
+            builder: (context, snap) {
+              //EveryData is here in the snap
+              if (snap.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snap.hasData) {
+                if (snap.data!.status == 'true') { //? If the intended data is recieved
+                  return ListView.builder(
+                      itemCount: snap.data!.totalCount,
+                      itemBuilder: (context, i) {
+                        return _tile(snap.data!.blogList![i]);
+                      });
+                } else { //? If the requied data was not returned i.e. status == 'false'
+                  return Center(
+                    child: Text("${snap.data!.message}"),
+                  );
+                }
+              } else {
+                return Center(
+                  child: Text("${snap.error}"),
+                );
               }
-          ),
-        ),
+            }),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          GestureDetector(
-            onTap: () => AlertDialog(),
-          );
-        },
+        onPressed: () {},
         child: Icon(
           Icons.add,
         ),
@@ -143,9 +167,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     Icon(
-                      data.liked! == "true" 
-                      ? Icons.favorite 
-                      : Icons.favorite_border,
+                      data.liked! == "true"
+                          ? Icons.favorite
+                          : Icons.favorite_border,
                       color: Colors.pink,
                     )
                   ],
@@ -183,9 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     data.wordsByBlogger!,
                     overflow: TextOverflow.ellipsis,
                   )
-                ]
-                )
-            )
+                ]))
           ],
         ),
       ),
