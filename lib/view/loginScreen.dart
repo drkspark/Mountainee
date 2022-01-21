@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:classes/models/login_model.dart';
 import 'package:classes/networkHelper.dart';

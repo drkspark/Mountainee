@@ -1,4 +1,4 @@
-package com.example.classes
+package com.drkspark.mountaine
 
 import io.flutter.embedding.android.FlutterActivity
 
