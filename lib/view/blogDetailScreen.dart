@@ -14,7 +14,7 @@ class _BlogDetailState extends State<BlogDetail> {
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: (){},
+          onPressed: () {},
           child: Text("Details"),
         ),
       ),

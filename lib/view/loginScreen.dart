@@ -1,7 +1,13 @@
+import 'dart:developer';
+
+import 'package:classes/models/login_model.dart';
+import 'package:classes/networkHelper.dart';
 import 'package:classes/view/homeScreen.dart';
 import 'package:classes/view/registerPage.dart';
+import 'package:classes/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../api.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -19,6 +25,13 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<
       FormState>(); //?  Creates a [LabeledGlobalKey], which is a [GlobalKey] with a label used for debugging.
   //? The label is purely for debugging and not used for comparing the identity of the key.
+
+  //! Api Login
+  getLogin() async {
+    var creds = await hitApi(loginApi(_mobCntrl.text, _passCntrl.text));
+    LoginModel loginModel = LoginModel.fromJson(creds);
+    return loginModel;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,9 +129,7 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: ElevatedButton(
-                  onPressed: () => _loginValidate(),
-                  child: Text("Login")
-              ),
+                  onPressed: () => _loginValidate(), child: Text("Login")),
             ),
 
 //! Recover PassWord
@@ -144,21 +155,26 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-  _loginValidate(){
+
+  _loginValidate() async {
+//! APi Login
     if (_formKey.currentState!.validate()) {
-      if (_mobCntrl.text == "9963696101" &&
-          _passCntrl.text == "admin") {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => HomeScreen()));
+      
+      loader(context); //? Showing loader as the Api Has been hit 
+      LoginModel loginModel = await getLogin();
+      Navigator.pop(context); //? Removing the loader as we have got the response
+
+      if (loginModel.status! == 'true') {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => HomeScreen()));
       } else {
-        //! Prompt to show creds are Wrong
         showDialog(
-            barrierDismissible: false, // This will make sure that the dialog box closes only when OK button is tapped
+            barrierDismissible:
+                false, // This will make sure that the dialog box closes only when OK button is tapped
             context: context,
             builder: (context) => AlertDialog(
                   title: Text("Alert!!"),
-                  content: Text(
-                      "You have provided with wrong credential!! , Please Correct them"),
+                  content: Text(loginModel.messageinfo!),
                   actions: [
                     TextButton(
                         onPressed: () {
@@ -166,9 +182,34 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: Text("OK"))
                   ],
-            )
-        );
+                ));
       }
     }
+
+//! dummy Login
+    //   if (_formKey.currentState!.validate()) {
+    //     if (_mobCntrl.text == "9963696101" && _passCntrl.text == "admin") {
+    //       Navigator.of(context)
+    //           .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+    //     } else {
+    //       //! Prompt to show creds are Wrong
+    //       showDialog(
+    //           barrierDismissible:
+    //               false, // This will make sure that the dialog box closes only when OK button is tapped
+    //           context: context,
+    //           builder: (context) => AlertDialog(
+    //                 title: Text("Alert!!"),
+    //                 content: Text(
+    //                     "You have provided with wrong credential!! , Please Correct them"),
+    //                 actions: [
+    //                   TextButton(
+    //                       onPressed: () {
+    //                         Navigator.pop(context);
+    //                       },
+    //                       child: Text("OK"))
+    //                 ],
+    //               ));
+    //     }
+    //   }
   }
 }

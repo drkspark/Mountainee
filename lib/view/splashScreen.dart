@@ -23,15 +23,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigate() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => LoginPage() )
-    );
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    body: Container(
+        body: Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       color: Colors.redAccent,
@@ -56,10 +55,8 @@ class _SplashScreenState extends State<SplashScreen> {
               style: TextStyle(fontSize: 15),
             ),
             Text("Version 1.0"),
-          ]
-        ),
-      )
-    );
+          ]),
+    ));
   }
 }
 

@@ -20,9 +20,7 @@ class _AddBlogState extends State<AddBlog> {
 
     _image = await _picker.pickImage(source: source);
 
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
@@ -44,47 +42,46 @@ class _AddBlogState extends State<AddBlog> {
               alignment: Alignment.center,
               color: Colors.blue[50],
               height: 200,
-              child: _image == null 
-              ? _accessImage() 
-              :GestureDetector(
-                onTap: () => showDialog(
-                  context: context,
-                  builder: (context) => Dialog(
-                    child: _accessImage(),
-                  )
-                ),
-                child: Image.file(File(_image!.path))
-              ),
+              child: _image == null
+                  ? _accessImage()
+                  : GestureDetector(
+                      onTap: () => showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                                child: _accessImage(),
+                              )),
+                      child: Image.file(File(_image!.path))),
             )
           ],
         ),
       ),
     );
   }
-  Widget _accessImage(){
+
+  Widget _accessImage() {
     return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        getImage(ImageSource.camera);
-                      },
-                      icon: Icon(
-                        Icons.camera_alt_rounded,
-                        size: 40,
-                      )),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        getImage(ImageSource.gallery);
-                      },
-                      icon: Icon(
-                        Icons.image_rounded,
-                        size: 40,
-                      ))
-                ],
-              );
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+            onPressed: () {
+              getImage(ImageSource.camera);
+            },
+            icon: Icon(
+              Icons.camera_alt_rounded,
+              size: 40,
+            )),
+        SizedBox(
+          width: 15,
+        ),
+        IconButton(
+            onPressed: () {
+              getImage(ImageSource.gallery);
+            },
+            icon: Icon(
+              Icons.image_rounded,
+              size: 40,
+            ))
+      ],
+    );
   }
 }

@@ -119,9 +119,8 @@ class _RegisterState extends State<Register> {
                         return "Invalid Email";
                       else if (value.length < 12) {
                         return "Min Length is 12";
-                      }
-                      else
-                      return null;
+                      } else
+                        return null;
                     },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     cursorColor: Colors.black,

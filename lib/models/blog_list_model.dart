@@ -27,5 +27,5 @@ class BlogListModel {
         'Message': message,
         'BlogList': blogList?.map((e) => e.toJson()).toList(),
         'Status': status,
-  };
+      };
 }
