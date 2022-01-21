@@ -1,6 +1,7 @@
 import 'package:classes/api.dart';
 import 'package:classes/models/blog_list_model.dart';
 import 'package:classes/models/blog_list.dart';
+import 'package:classes/models/login_model.dart';
 import 'package:classes/networkHelper.dart';
 import 'package:classes/view/addBlog.dart';
 // import 'package:classes/view/blogDetailScreen.dart';
@@ -8,18 +9,15 @@ import 'package:classes/view/settingPage.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final LoginModel loginModel;
+
+  HomeScreen({required this.loginModel}); //Accepting  the data from the Login Page
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // BlogListModel _blogListModel = BlogListModel();
-  // @override
-  // void initState() {
-  //   _blogListModel = BlogListModel.fromJson(data); //Present in the data.dart
-  //   super.initState();
-  // }
 
   // Get Blog Data
   Future<BlogListModel> getBlogList() async {
@@ -96,15 +94,19 @@ class _HomeScreenState extends State<HomeScreen> {
               otherAccountsPictures: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                      "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F1.bp.blogspot.com%2F-x_00uf0IyW4%2FYSaWrh8Ry8I%2FAAAAAAAB--U%2FNkTa0MCiH_Uk9c2P2zg-3yCaj5rbheMEACLcBGAsYHQ%2Fs512%2FTooltip_PenguKnight_SpiritFairy_SpiritFairy1_Tier1.LittleLegends_11_18.png&f=1&nofb=1"),
+                      // "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F1.bp.blogspot.com%2F-x_00uf0IyW4%2FYSaWrh8Ry8I%2FAAAAAAAB--U%2FNkTa0MCiH_Uk9c2P2zg-3yCaj5rbheMEACLcBGAsYHQ%2Fs512%2FTooltip_PenguKnight_SpiritFairy_SpiritFairy1_Tier1.LittleLegends_11_18.png&f=1&nofb=1")
+                    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.darkspark.com%2Fwp-content%2Fthemes%2Fonetone-pro%2Fimages%2FDarkSparkLogo-Filled-black.png&f=1&nofb=1"
+                  )
                 )
               ],
               currentAccountPicture: CircleAvatar(
                 child: Image.network(
-                    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.darkspark.com%2Fwp-content%2Fthemes%2Fonetone-pro%2Fimages%2FDarkSparkLogo-Filled-black.png&f=1&nofb=1"),
+                      widget.loginModel.image!,
+                ),
               ),
-              accountName: Text("drkspark"),
-              accountEmail: Text("drkspark@mail.org")),
+              accountName: Text(widget.loginModel.bloggerName!),
+              accountEmail: Text(widget.loginModel.email!)
+          ),
           ListTile(
             title: Text("Home Page"),
             leading: Icon(Icons.home),

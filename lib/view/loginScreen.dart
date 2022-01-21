@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../api.dart';
 
 class LoginPage extends StatefulWidget {
+
   const LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -166,7 +167,10 @@ class _LoginPageState extends State<LoginPage> {
 
       if (loginModel.status! == 'true') {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+            .push(MaterialPageRoute(
+              builder: (context) => HomeScreen(loginModel : loginModel) //Passing the User Data to the HomeScreen
+            )
+            );
       } else {
         showDialog(
             barrierDismissible:
