@@ -1,6 +1,9 @@
 # classes
 
-A new Flutter project.
+23 Jan 2022
+init first Commit on GitHub
+We will be working with Firebase Firestore Now 
+
 
 ## Getting Started
 
